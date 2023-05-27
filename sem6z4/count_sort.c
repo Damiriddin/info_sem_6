@@ -1,37 +1,57 @@
 #include <stdio.h>
-#include <strlib.h>
+#include <stdlib.h>
 
-void counting_sort(int arr[], int n) {
-    int count[1000] = {0};
+void counting_sort(int arr[], int n)
+{
     int output[n];
-
-// подсчет количества элементов каждого значения
-for (int i = 0; i < n; i++) {
-    count[arr[i]]++;
+    int i, min, max;
+    min = max = arr[0];
+    // max and min - find
+    for (i = 0; i < n; i++)
+    {
+        if (arr[i] < min)
+        {
+            min = arr[i];
+        }
+        else if (arr[i] > max)
+        {
+            max = arr[i];
+        }
+    }
+    int countsize = max - min + 1;
+    int *count = (int *)malloc(countsize * sizeof(int));
+    if (count == NULL)
+    {
+        printf("Memory Error!");
     }
 
-// подсчет количества элементов меньших или равных каждому значению
-for (int i = 1; i < 1000; i++) {
-    count[i] += count[i-1];
+   
+    // РїРѕРґСЃС‡РёС‚С‹РІР°РµРј С‡Р°СЃС‚РѕС‚Сѓ РІС…РѕР¶РґРµРЅРёР№ СЌР»РµРјРµРЅС‚РѕРІ
+    for (i = 0; i < n; i++)
+    {
+        count[arr[i] - min] = count[arr[i] - min] + 1;
     }
 
-// заполнение результирующего массива
-for (int i = n-1; i >= 0; i--) {
-    output[count[arr[i]]-1] = arr[i];
-    count[arr[i]]--;
-    }
-
-// копирование результирующего массива в исходный
-for (int i = 0; i < n; i++) {
-    arr[i] = output[i];
+       int k = 0;
+    for (i = 0; i < countsize; i++)
+    {
+        for (int j = 0; j < count[i]; j++)
+        {
+            arr[k++] = i + min;
+        }
     }
 }
 
-int main() {
-    int arr[10] = {5, 2, 8, 9, 0, 1, 6, 3, 4, 7};
-    counting_sort(arr, 10);
-// вывод отсортированного массива
-    for (int i = 0; i < 10; i++) {
+
+
+int main()
+{
+    int size;
+    int arr[] = {-99, 99, 85, 7, 4, 0, 5, 45, 75, 10};
+    size = sizeof(arr) / sizeof(int);
+    counting_sort(arr, size);
+    for (int i = 0; i < size; i++)
+    {
         printf("%d ", arr[i]);
     }
     printf("\n");
