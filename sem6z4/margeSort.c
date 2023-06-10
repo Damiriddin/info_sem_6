@@ -58,7 +58,7 @@ void marge(int arr[],int leftarr[],int rightarr[],int leftsize,int rightsize)
     }
 }
 
-// маленькая функция вывода 
+//  функция вывода 
 void displayArray(int arr[], int n)
 {
     for (int i = 0; i < n; i++)
